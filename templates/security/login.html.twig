@@ -8,9 +8,9 @@
                     <div class="card-body">
                         <form class="form-horizontal" role="form" method="post">
                             <AmpContent>
-                                <div class="alert alert-danger">
-                                    {% if error %}{{ error.messageKey|trans(error.messageData, 'security') }}{% endif %}
-                                </div>
+
+                                    {% if error %}<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>{% endif %}
+
 
                                 </NonAmpContent> <AmpContent>
                                     <div class="mb-3">
