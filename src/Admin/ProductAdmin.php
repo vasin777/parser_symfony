@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\File;
 
 final class ProductAdmin extends AbstractAdmin
 {
@@ -27,9 +29,9 @@ final class ProductAdmin extends AbstractAdmin
     {
         $list
             ->add('id')
-            ->add('name')
-            ->add('price')
-            ->add('img')
+            ->add('name', TextType::class, ['label'=>'Наименование'])
+            ->add('price', TextType::class, ['label'=>'Цена'])
+            ->add('img', TextType::class, ['label'=>'Изображение'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -42,9 +44,9 @@ final class ProductAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('name')
-            ->add('price')
-            ->add('img', FileType::class)
+            ->add('name', TextType::class, ['label'=>'Наименование'])
+            ->add('price', TextType::class, ['label'=>'Цена'])
+            ->add('img', FileType::class, ['label'=>'Изображение'])
             ;
     }
 
@@ -52,9 +54,9 @@ final class ProductAdmin extends AbstractAdmin
     {
         $show
             ->add('id')
-            ->add('name')
-            ->add('price')
-            ->add('img')
+            ->add('name', TextType::class, ['label'=>'Наименование'])
+            ->add('price', TextType::class, ['label'=>'Цена'])
+            ->add('img', FileType::class, ['label'=>'Изображение'])
             ;
     }
 }

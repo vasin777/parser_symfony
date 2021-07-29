@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File;
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
@@ -66,11 +66,15 @@ class Product
     {
         return $this->img;
     }
-
-    public function setImg(string $img): self
+    /**
+     * Set img
+     *
+     * @param string $img
+     */
+    public function setImg($img)
     {
-        $this->img = $img;
-
-        return $this;
+        $filename = rand(1000000,9999999).".".substr($img->getClientOriginalName(), strpos($img->getClientOriginalName(), "."));
+        $img->move($_SERVER["DOCUMENT_ROOT"]."/img/", $filename);
+        $this->img = $filename;
     }
 }
