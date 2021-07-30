@@ -11,7 +11,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\File;
 
 final class ProductAdmin extends AbstractAdmin
 {
@@ -56,7 +55,8 @@ final class ProductAdmin extends AbstractAdmin
             ->add('id')
             ->add('name', TextType::class, ['label'=>'Наименование'])
             ->add('price', TextType::class, ['label'=>'Цена'])
-            ->add('img', FileType::class, ['label'=>'Изображение'])
+            ->add('img', TextType::class, ['label'=>'Изображение', 'template'=>'templates/Admin/img.html.twig'])
             ;
     }
 }
+

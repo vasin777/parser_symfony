@@ -22,7 +22,7 @@ final class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('name')
             ->add('roles')
-            ;
+        ;
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -51,7 +51,7 @@ final class UserAdmin extends AbstractAdmin
                 'first_options' => ['label' => 'Пароль'],
                 'second_options' => ['label' => 'Подтверждение пароля']
             ])
-            ;
+        ;
     }
 
     protected function configureShowFields(ShowMapper $show): void
@@ -60,6 +60,6 @@ final class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('name')
             ->add('roles')
-            ;
+        ;
     }
 }

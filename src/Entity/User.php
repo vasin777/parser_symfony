@@ -87,7 +87,8 @@ class User implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        $hash = password_hash($password, PASSWORD_BCRYPT);
+        $this->password = $hash;
         return $this;
     }
 
