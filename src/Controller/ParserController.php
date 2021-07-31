@@ -36,7 +36,7 @@ class ParserController extends AbstractController
             $crawler = new Crawler($content);
 
         // получение данных
-            $links = $crawler->filter('.section-block-view-items')->each(function ($node){
+            $links = $crawler->filter('.section-block-view')->each(function (Crawler $node){
                 $href = $node->filter('.section-block-view-item-inner .block-view-photo a')->attr('href');
                 $title = $node->filter('.block-view-title a')->text();
                 $price = $node->filter('.price_little')->text();
@@ -45,13 +45,12 @@ class ParserController extends AbstractController
 
             });
         foreach ($links as $link){
+
             dump($link);
+
+            }
+
         }
-
-
-        }
-
-
 
 
         return $this->render('parser/index.html.twig', [
