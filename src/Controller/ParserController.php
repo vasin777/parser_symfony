@@ -18,8 +18,8 @@ class ParserController extends AbstractController
     public function index(): Response
     {
         //url страницы для парсинга
-        for ($i=1; $i<25; $i++) {
-            $url = 'https://podtrade.ru/catalog/sistemy_lineynogo_peremeshcheniya/?PAGEN_1='. $i;
+       // for ($i=1; $i<25; $i++) {
+            $url = 'https://podtrade.ru/catalog/sistemy_lineynogo_peremeshcheniya/'; //?PAGEN_1=. $i;
 
         //создание http запроса
         $client = HttpClient::create();
@@ -51,7 +51,7 @@ class ParserController extends AbstractController
             }
 
          }
-        }
+       // }
 
 
         return $this->render('parser/index.html.twig', [
