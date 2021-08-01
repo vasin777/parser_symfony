@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\CssSelector;
+use Symfony\Component\CssSelector\CssSelectorConverter;
 
 class ParserController extends AbstractController
 {
@@ -18,7 +18,8 @@ class ParserController extends AbstractController
     public function index(): Response
     {
         //url страницы для парсинга
-        $url = 'https://podtrade.ru/catalog/sistemy_lineynogo_peremeshcheniya/';
+        for ($i=1; $i<25; $i++) {
+            $url = 'https://podtrade.ru/catalog/sistemy_lineynogo_peremeshcheniya/?PAGEN_1='. $i;
 
         //создание http запроса
         $client = HttpClient::create();
@@ -44,10 +45,12 @@ class ParserController extends AbstractController
                 $node=compact('href', 'title', 'price', 'img');
                 return $node;
             });
+
         foreach ($links as $link){
             dump($link);
             }
 
+         }
         }
 
 
