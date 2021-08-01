@@ -36,12 +36,13 @@ class ParserController extends AbstractController
             $crawler = new Crawler($content);
 
         // получение данных
-            $links = $crawler->filter('div.section-block-view')->each(function (Crawler $node){
-                $href = $node->filter('div.section-block-view-item-inner>div.block-view-photo>a')->attr('href');
-                $title = $node->filter('div.block-view-title>a')->text();
-                $price = $node->filter('div.price_little')->text();
+            $links = $crawler->filter('div.section-block-view-item-inner')->each(function (Crawler $node){
+                $href = $node->filter('a')->attr('href');
+                $title = $node->filter('div.section-block-view-item-inner > div.block-view-title > a')->text();
+                $price = $node->filter('div.block-view-price')->text();
                 $img = $node->filter('img')->attr('src');
-                return compact('href', 'title', 'price', 'img');
+                $node=compact('href', 'title', 'price', 'img');
+                return $node;
             });
         foreach ($links as $link){
             dump($link);
