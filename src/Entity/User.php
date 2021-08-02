@@ -60,20 +60,19 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $roles = [];
-    public function getRoles(): ?array
+    private $roles;
+    public function getRoles(): ?string
     {
         $roles = $this->roles;
-        $roles[] = '';
+        //$roles[] = '';
         return $roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 

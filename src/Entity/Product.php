@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use http\Env\Request;
 use Symfony\Component\HttpFoundation\File;
+use Symfony\Component\VarDumper\VarDumper;
+
 /**
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -24,12 +27,12 @@ class Product
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=2550)
      */
     private $img;
 
@@ -50,20 +53,24 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(string $price): self
     {
         $this->price = $price;
 
         return $this;
     }
 
-
-    public function getImg(): ?string
+    /**
+     * Set img
+     *
+     * @param string img
+     */
+    public function getImg()
     {
         return $this->img;
     }
@@ -74,8 +81,10 @@ class Product
      */
     public function setImg($img)
     {
-        $filename = rand(1000000,9999999).".".substr($img->getClientOriginalName(), strpos($img->getClientOriginalName(), "."));
-        $img->move($_SERVER["DOCUMENT_ROOT"]."/img/", $filename);
+        $path = parse_url($img, PHP_URL_PATH);
+        $filename = rand(1000000,9999999).".".$path;
+        $filename  =  preg_replace('{\/}','',$filename);
+        file_put_contents($_SERVER["DOCUMENT_ROOT"]."/img/".$filename, file_get_contents($img));
         $this->img = $filename;
     }
 }

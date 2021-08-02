@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class UserAdmin extends AbstractAdmin
 {
@@ -30,7 +31,7 @@ final class UserAdmin extends AbstractAdmin
         $list
             ->add('email')
             ->add('name')
-            ->add('roles')
+            ->add('roles',TextType::class, ['label'=>'Роль'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -45,7 +46,7 @@ final class UserAdmin extends AbstractAdmin
         $form
             ->add('name')
             ->add('email')
-            ->add('roles')
+            ->add('roles', TextType::class, ['label'=>'Роль'])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Пароль'],
@@ -59,7 +60,7 @@ final class UserAdmin extends AbstractAdmin
         $show
             ->add('email')
             ->add('name')
-            ->add('roles')
+            ->add('roles',TextType::class, ['label'=>'Роль'])
         ;
     }
 }
