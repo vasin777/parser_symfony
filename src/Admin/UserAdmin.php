@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use DeepCopy\TypeFilter\TypeFilter;
+use phpDocumentor\Reflection\Types\Array_;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sonata\Form\Type\CollectionType;
 
 final class UserAdmin extends AbstractAdmin
 {
@@ -31,7 +35,7 @@ final class UserAdmin extends AbstractAdmin
         $list
             ->add('email')
             ->add('name')
-            ->add('roles',TextType::class, ['label'=>'Роль'])
+            ->add('roles',null, ['label'=>'Роль'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -46,7 +50,7 @@ final class UserAdmin extends AbstractAdmin
         $form
             ->add('name')
             ->add('email')
-            ->add('roles', TextType::class, ['label'=>'Роль'])
+           // ->add('roles', CollectionType::class, ['allow_add' => true,'allow_delete' => true])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Пароль'],
@@ -60,7 +64,7 @@ final class UserAdmin extends AbstractAdmin
         $show
             ->add('email')
             ->add('name')
-            ->add('roles',TextType::class, ['label'=>'Роль'])
+           ->add('roles',null, ['label'=>'Роль'])
         ;
     }
 }
