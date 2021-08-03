@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 namespace App\Admin;
-
+use App\Entity\Product;
+use Sonata\Doctrine;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -11,9 +12,11 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File;
 
 final class ProductAdmin extends AbstractAdmin
 {
+
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
@@ -55,8 +58,8 @@ final class ProductAdmin extends AbstractAdmin
             ->add('id')
             ->add('name', TextType::class, ['label'=>'Наименование'])
             ->add('price', TextType::class, ['label'=>'Цена'])
-            ->add('img', TextType::class, ['label'=>'Изображение', 'template'=>'templates/Admin/img.html.twig'])
-            ;
+            ->add('img', FileType::class, ['label'=>'Изображение'])
+        ;
     }
 }
 

@@ -44,7 +44,7 @@ final class UserAdmin extends AbstractAdmin
             $object->setPassword(
                 $this->passwordEncoder->encodePassword($object, $object->getPassword())
             );
-            $object->setRoles('roles');
+            $object->setRoles('ROLE_ADMIN');
         }
     }
 

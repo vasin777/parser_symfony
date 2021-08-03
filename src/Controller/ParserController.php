@@ -36,8 +36,8 @@ class ParserController extends AbstractController
 
 
         //url страницы для парсинга
-        // for ($i=1; $i<25; $i++) {
-        $url = 'https://podtrade.ru/catalog/sistemy_lineynogo_peremeshcheniya/'; //?PAGEN_1=. $i;
+         for ($i=1; $i<25; $i++) {
+        $url = 'https://podtrade.ru/catalog/sistemy_lineynogo_peremeshcheniya/'.'?PAGEN_1='.$i;
 
         //создание http запроса
         $client = HttpClient::create();
@@ -71,7 +71,14 @@ class ParserController extends AbstractController
                 $product = new Product();
                 $product->setName($link['title'], $product->getName());
                 $product->setPrice($link['price'], $product->getPrice());
-                $product->setImg($link['image'], $product->getImg());
+               // $product->setImg($link['image'], $product->getImg());
+
+                $path = parse_url($link['image'], PHP_URL_PATH);
+                $filename = rand(1000000,9999999).".".$path;
+                $filename  =  preg_replace('{\/}','',$filename);
+                file_put_contents($_SERVER["DOCUMENT_ROOT"]."/img/".$filename, file_get_contents($link['image']));
+
+                $product->setImg($filename, $product->getImg());
 
 
                 // Сохранение в БД
@@ -83,7 +90,7 @@ class ParserController extends AbstractController
 
             echo 'Готово';
         }
-        // }
+         }
 
         return $this->render('parser/index.html.twig', [
             'controller_name' => 'ParserController'

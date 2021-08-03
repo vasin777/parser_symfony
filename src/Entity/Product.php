@@ -74,17 +74,11 @@ class Product
     {
         return $this->img;
     }
-    /**
-     * Set img
-     *
-     * @param string $img
-     */
+
     public function setImg($img)
     {
-        $path = parse_url($img, PHP_URL_PATH);
-        $filename = rand(1000000,9999999).".".$path;
-        $filename  =  preg_replace('{\/}','',$filename);
-        file_put_contents($_SERVER["DOCUMENT_ROOT"]."/img/".$filename, file_get_contents($img));
-        $this->img = $filename;
+        $this->img = $img;
+
+        return $this;
     }
 }
