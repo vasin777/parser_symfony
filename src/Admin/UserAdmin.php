@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 namespace App\Admin;
-
+use App\Entity\User;
+use SebastianBergmann\CodeCoverage\Report\Text;
+use Sonata\Doctrine;
 use DeepCopy\TypeFilter\TypeFilter;
 use phpDocumentor\Reflection\Types\Array_;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -16,9 +18,35 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\Form\Type\CollectionType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 final class UserAdmin extends AbstractAdmin
 {
+    protected $passwordEncoder;
+
+    public function setPasswordEncoder(UserPasswordEncoder $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+    public function preUpdate($object)
+    {
+        $this->setPassword($object);
+    }
+
+    public function prePersist($object)
+    {
+        $this->setPassword($object);
+    }
+
+    protected function setPassword(User $object)
+    {
+        if ($object->getPassword()) {
+            $object->setPassword(
+                $this->passwordEncoder->encodePassword($object, $object->getPassword())
+            );
+            $object->setRoles('roles');
+        }
+    }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
@@ -34,7 +62,7 @@ final class UserAdmin extends AbstractAdmin
     {
         $list
             ->add('email')
-            ->add('name')
+            ->add('name', TextType::class, ['label'=>'Имя'])
             ->add('roles',null, ['label'=>'Роль'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -48,22 +76,22 @@ final class UserAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('name')
+            ->add('name', TextType::class, ['label'=>'Имя'])
             ->add('email')
-           // ->add('roles', CollectionType::class, ['allow_add' => true,'allow_delete' => true])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'Пароль'],
-                'second_options' => ['label' => 'Подтверждение пароля']
-            ])
+            ->add('password', PasswordType::class, ['label'=>'Пароль'])
+        /*    ->add('roles', CollectionType::class, [
+                'allow_add' => true,
+                'allow_delete' => true,
+            ]) */
         ;
     }
+
 
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('email')
-            ->add('name')
+            ->add('name',TextType::class, ['label'=>'Имя'])
            ->add('roles',null, ['label'=>'Роль'])
         ;
     }

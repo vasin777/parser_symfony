@@ -69,8 +69,8 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-       // $roles['USER_ROLE'];
-        return $roles;
+        $roles = [$roles];
+        return  $roles;
     }
 
     public function setRoles(string $roles): self
@@ -89,8 +89,8 @@ class User implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $hash = password_hash($password, PASSWORD_BCRYPT);
-        $this->password = $hash;
+        //$hash = password_hash($password, PASSWORD_BCRYPT);
+        $this->password = $password;
         return $this;
     }
 

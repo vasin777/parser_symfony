@@ -35,6 +35,8 @@ services:
         arguments: [~, App\Entity\User, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Система, label: Пользователи }
+        calls:
+            - [ setPasswordEncoder, [ '@security.password_encoder' ]]
         public: true
 
     admin.product:
