@@ -88,9 +88,10 @@ class ParserController extends AbstractController
 
             }
 
-            echo 'Готово';
+            
         }
          }
+        echo 'Готово';
 
         return $this->render('parser/index.html.twig', [
             'controller_name' => 'ParserController'
